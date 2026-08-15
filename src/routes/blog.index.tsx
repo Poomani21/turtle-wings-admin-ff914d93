@@ -26,13 +26,23 @@ export const Route = createFileRoute("/blog/")({
 });
 
 function BlogIndex() {
-  const { data: firebasePosts } = useQuery({
+  // Firestore is the source of truth for the public blog. No initialData: an
+  // empty array must never be cached as a "fresh" result, otherwise a reload
+  // can leave the page stuck on demo content.
+  const {
+    data: firebasePosts,
+    isPending,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ["published-firebase-blogs"],
     queryFn: fetchPublishedFirebasePosts,
-    initialData: [],
-    staleTime: 60_000,
+    staleTime: 30_000,
+    retry: 1,
   });
-  const allPosts = mergePostsBySlug(posts, firebasePosts);
+
+  const allPosts = resolvePosts(firebasePosts ?? [], demoPosts);
+
 
   return (
     <>
