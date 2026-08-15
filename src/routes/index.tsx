@@ -56,6 +56,8 @@ const icons: Record<string, ComponentType<{ className?: string; "aria-hidden"?: 
 };
 
 function Home() {
+  const contact = useSiteContact();
+
   return (
     <>
       {/* HERO */}
