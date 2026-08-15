@@ -43,7 +43,7 @@ export function CollectionAdmin({
 }) {
   const queryClient = useQueryClient();
   const [draft, setDraft] = useState<Row | null>(null);
-  const [uploading, setUploading] = useState<string | null>(null);
+  
 
   const list = useQuery({ queryKey: ["admin", name], queryFn: () => adminList<Row>(name) });
 
