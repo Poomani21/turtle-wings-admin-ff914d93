@@ -70,8 +70,8 @@ export function CollectionAdmin({
 
   return (
     <div>
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3 sm:flex sm:justify-between">
+        <div className="min-w-0">
           <h1 className="font-display text-2xl font-extrabold text-forest-deep">{heading}</h1>
           {intro ? <p className="mt-1 text-sm text-muted-foreground">{intro}</p> : null}
         </div>
@@ -79,7 +79,7 @@ export function CollectionAdmin({
           <button
             type="button"
             onClick={() => setDraft({ id: "", ...defaults })}
-            className="inline-flex min-h-10 items-center gap-2 rounded-full bg-secondary px-4 text-sm font-extrabold text-secondary-foreground"
+            className="inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full bg-secondary px-4 text-sm font-extrabold text-secondary-foreground"
           >
             <Plus aria-hidden="true" className="size-4" /> New
           </button>
@@ -226,9 +226,9 @@ export function CollectionAdmin({
         ) : (
           (list.data ?? []).map((row) => (
             <div key={row.id} className="rounded-2xl border border-border bg-card p-4">
-              <div className="flex flex-wrap items-start justify-between gap-3">
+              <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start">
                 <div className="min-w-0">
-                  <p className="font-display font-bold text-forest-deep">{primary(row)}</p>
+                  <p className="font-display font-bold break-words text-forest-deep">{primary(row)}</p>
                   {secondary ? (
                     <p className="mt-0.5 text-xs text-muted-foreground">{secondary(row)}</p>
                   ) : null}
