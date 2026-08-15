@@ -51,25 +51,31 @@ export const Route = createFileRoute("/blog/$slug")({
 });
 
 function BlogPost() {
-  const { post: staticPost } = Route.useLoaderData();
+  const { post: demoPost } = Route.useLoaderData();
   const { slug } = Route.useParams();
+  // Firestore always wins: a published Firebase post with this slug replaces
+  // the static demo entry of the same slug.
   const { data: firebasePosts, isPending } = useQuery({
     queryKey: ["published-firebase-blogs"],
     queryFn: fetchPublishedFirebasePosts,
-    enabled: !staticPost,
-    staleTime: 60_000,
+    staleTime: 30_000,
+    retry: 1,
   });
 
-  if (staticPost) return <BlogPostView post={staticPost} />;
-  if (isPending || !firebasePosts) return <div className="container-site py-24" />;
-
-  const firebasePost = firebasePosts.find((p) => p.slug === slug);
-  if (!firebasePost) throw notFound();
-  return <BlogPostView post={firebasePost} />;
+  const firebasePost = firebasePosts?.find((p) => p.slug === slug);
+  if (firebasePost) return <BlogPostView post={firebasePost} related={firebasePosts ?? []} />;
+  if (demoPost) return <BlogPostView post={demoPost} related={posts} />;
+  if (isPending) {
+    return (
+      <div className="container-site py-24 text-sm text-muted-foreground">Loading article…</div>
+    );
+  }
+  throw notFound();
 }
 
-function BlogPostView({ post }: { post: Post }) {
-  const related = posts.filter((p) => p.slug !== post.slug).slice(0, 2);
+function BlogPostView({ post, related: pool }: { post: Post; related: Post[] }) {
+  const related = pool.filter((p) => p.slug !== post.slug).slice(0, 2);
+
 
   return (
     <>
