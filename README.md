@@ -1,646 +1,1071 @@
-# Turtle Wings Admin
+# Bright Beginnings
 
-# Continue and Complete My Existing Turtle Wings GitHub Project
+Build an Animation-Based Special Education Website from the Canva Reference
 
-My existing GitHub repository is:
+ROLE
 
-https://github.com/Poomani21/turtle-wings-admin.git
+Act as a 20+ year senior UI/UX designer, creative director, WordPress developer, frontend engineer, accessibility specialist, SEO specialist, and website animation expert.
 
-Another AI already started modifying this project and stopped in the middle.
+You are building a real production-ready website, not a generic AI template.
 
-**DO NOT rebuild the project. DO NOT start from scratch. DO NOT replace Firebase.**
+The client has provided a Canva design/content reference:
 
-First inspect the current repository and continue from the code that is already implemented.
+Canva Reference:
+https://canva.link/nrx5csir3tp76x5
 
-## Current partially completed work
+IMPORTANT: Use the Canva reference as the primary design and content source.
 
-Already implemented:
+Before writing the final UI, carefully analyze the Canva reference and reproduce its:
 
-* `src/lib/cms.ts`
+Overall visual identity
 
-  * `fetchPublicMembers()`
-  * Blog sorting improvements
-  * Resumable Firebase Storage uploads
-  * Upload progress
-  * `validateUpload()`
-  * `storageFolder()`
-  * Image limit: 8 MB
-  * Video limit: 200 MB
-* `src/components/admin/MediaUpload.tsx`
+Page structure
 
-  * Choose/replace file
-  * Upload progress
-  * Image/video preview
-  * Success/error states
-  * Existing HTTPS URLs still supported
-* `src/components/admin/CollectionAdmin.tsx`
+Section order
 
-  * MediaUpload integration was started but currently has build errors.
+Typography style
 
-## FIRST — fix the build
+Color palette
 
-Open:
+Image style
 
-`src/components/admin/CollectionAdmin.tsx`
+Card styles
 
-Add:
+Spacing
 
-```ts
-import { MediaUpload } from "@/components/admin/MediaUpload";
-```
+Buttons
 
-Fix the upload callback typing:
+Headings
 
-```ts
-(url: string)
-```
+Illustrations
 
-Remove obsolete imports/state such as:
+Content hierarchy
 
-* old `uploadFile`
-* old `Loader2` if unused
-* old `onUpload`
-* old `uploading` state
+Visual storytelling
 
-Then run the build and make sure the project is green before doing anything else.
+Layout proportions
 
----
+Decorative elements
 
-# 1. Public Members
+Call-to-action sections
 
-Create:
+Do NOT create a random education website.
 
-`src/routes/members.tsx`
+Do NOT replace the Canva design with a generic template.
 
-Use the existing:
+The final website should feel like a professional animated version of the supplied Canva design.
 
-```ts
-fetchPublicMembers()
-```
+PROJECT CONTEXT
 
-from the existing `members` Firestore collection.
+The client provides classes and support for:
 
-Only show:
+Young children with autism
 
-```text
-isPublic == true
-```
+Children with other special needs
 
-Add **Members** to the existing website navigation.
+Early learning
 
-Do not hard-code members.
+Developmental support
 
-Use the existing Turtle Wings design.
+Individualized learning
 
-Make the Members page responsive on desktop/tablet/mobile.
+Parent support
 
----
+Child-focused educational programs
 
-# 2. CRITICAL — Fix Blog completely
+The website must communicate:
 
-The Blog currently has a serious dynamic-content problem.
+Trust + warmth + safety + professionalism + inclusivity + child-friendly learning.
 
-### Current behavior
+The design should be friendly enough for parents while still looking professional and credible.
 
-Sometimes the Admin Panel blog appears correctly.
+Avoid making the website look childish, cartoonish, or overly flashy.
 
-But sometimes:
+Use a modern premium educational design with subtle playful elements.
 
-* Firebase blogs do not appear
-* Static/old blog content appears instead
-* Hard reload causes Firebase blogs to disappear
-* Normal navigation can also show static content
-* Direct `/blog` access can behave differently
-* The Admin Panel blog is therefore NOT reliably reflected on the public website
+PRIMARY REQUIREMENT
 
-This must be completely fixed.
+Convert the Canva content/design into a:
 
-## Firebase must be the source of truth
+Responsive animated website suitable for WordPress + Hostinger hosting.
 
-The public Blog must always use:
+The architecture should also support:
 
-```text
-Admin Panel
-↓
-Firestore blogs
-↓
-isPublished == true
-↓
-Public Blog
-```
+Main website pages
 
-Do NOT allow static `site-content.ts` blog data to override Firebase data.
+Blog
 
-Search the entire project for:
+Blog detail pages
 
-```text
-site-content.ts
-initialData
-blog posts
-static blog
-fallback blog
-mock blog
-hard-coded blog
-```
+Inquiry/contact form
 
-Find every place where static blog content is being used.
+Responsive mobile layout
 
-If static content exists only as demo/fallback content, it must NOT replace or override Firebase content.
+SEO-friendly structure
 
-Do not blindly delete it. Keep appropriate loading/empty/error behavior.
+Accessibility
 
----
+Fast loading
 
-## Fix React Query
+Easy future content editing
 
-Inspect:
+DESIGN DIRECTION
 
-`src/routes/blog.index.tsx`
+Use the Canva design as the source of truth.
 
-The existing issue is:
+Where the Canva design contains a specific:
 
-```ts
-initialData: []
-```
+Color
 
-combined with:
+Font style
 
-```ts
-staleTime: 60_000
-```
+Illustration
 
-This can cause React Query to treat the empty array as fresh.
+Shape
 
-Fix this properly.
+Section
 
-Either remove:
+Button
 
-```ts
-initialData: []
-```
+Card
 
-or use:
+Image treatment
 
-```ts
-initialDataUpdatedAt: 0
-```
+Heading style
 
-Use the cleanest approach for the existing architecture.
+recreate it as closely as practical in HTML/CSS/React.
 
----
+Do not unnecessarily redesign the concept.
 
-## Verify `fetchPublishedBlogs()`
+The goal is:
 
-Make sure it correctly reads:
+Canva design → polished responsive website
 
-```text
-blogs
-```
+not:
 
-with:
+Canva design → completely different website.
 
-```text
-isPublished == true
-```
+ANIMATION STYLE
 
-Verify the fields used by the public Blog match the existing `BlogDoc`:
+Animation is a major requirement.
 
-* title
-* slug
-* content
-* excerpt
-* image
-* published date
-* `isPublished`
-* createdAt
-* updatedAt
-* other existing fields
+However, animations must feel professional and smooth, not distracting.
 
-Do not create a new Blog schema.
+Use modern web animation techniques such as:
 
----
+Fade-up on scroll
 
-## Test Blog in ALL situations
+Fade-in
 
-You must test:
+Slide-in
 
-### Normal navigation
+Gentle scale
 
-```text
-Home → Blog
-```
+Staggered card animations
 
-Firebase blog posts must appear.
+Image reveal
 
-### Hard reload
+Text reveal
 
-Open:
+Button hover animation
 
-```text
-/blog
-```
+Card hover elevation
 
-then:
+Soft floating decorative elements
 
-```text
-Ctrl + Shift + R
-```
+Smooth section transitions
 
-Firebase blog posts must still appear.
+Parallax only where appropriate
 
-### Direct URL
+Navigation transition
 
-Open `/blog` directly in a new browser tab.
+Mobile-friendly animations
 
-Firebase blogs must appear.
+Animations should generally be:
 
-### After Admin creates a blog
+subtle → smooth → purposeful → accessible
 
-```text
-Admin Panel
-→ Add Blog
-→ Publish
-→ Open public Blog
-```
+Avoid:
 
-The new blog must appear.
+Excessive bouncing
 
-### After editing
+Excessive spinning
 
-Admin edits blog → save → public Blog must show updated content.
+Flashing effects
 
-### Publish/unpublish
+Heavy animations
 
-```text
-isPublished = true
-```
+Long loading animations
 
-must show publicly.
+Animations that make text difficult to read
 
-```text
-isPublished = false
-```
+Respect:
 
-must remain hidden.
+prefers-reduced-motion
 
-### Refresh repeatedly
+for accessibility.
 
-Refresh the Blog page multiple times.
+WEBSITE STRUCTURE
 
-The result must remain consistent.
+Create the website based on the Canva content.
 
-There must NEVER be a situation where static content appears after refresh while Firebase content disappears.
+At minimum, structure the website around these sections/pages where applicable to the Canva reference:
 
----
+1. HOME
 
-# 3. Firebase Rules
+Create a strong hero section based on the Canva design.
 
-The admin architecture uses:
+Hero should include:
 
-```text
-admins/{uid}
-```
+Main heading from Canva
 
-Admin UID:
+Supporting text from Canva
 
-```text
-7IEaaUx6WfRu4lHuX20ThknBBqn1
-```
+Primary CTA
 
-Do not replace the authentication system.
+Secondary CTA if present
 
-Update Firestore rules so public members can be read when:
+Relevant image/illustration
 
-```text
-resource.data.isPublic == true || isAdmin()
-```
+Animated visual elements
 
-Admins must retain write access.
+Clean navigation
 
-Review:
+Mobile responsive layout
 
-* admins
-* programs
-* members
-* blogs
-* videos
-* enquiries
-* settings
+The first screen should immediately communicate:
 
-Do not make Firestore globally writable.
+Who the organization helps + what they provide + how parents can enquire.
 
----
+2. ABOUT
 
-# 4. Firebase Storage
+Create the About section/page using the Canva content.
 
-The new MediaUpload system uses Firebase Storage.
+Include appropriate:
 
-Support:
+Introduction
 
-```text
-images/**
-videos/**
-```
+Mission
 
-Public website must be able to display appropriate uploaded public media.
+Vision
 
-Only administrators should be able to upload/update/delete CMS media.
+Approach
 
-Do NOT make Storage globally writable.
+Values
 
-Existing external HTTPS URLs must continue working.
+Supporting information
 
----
+Images/illustrations
 
-# 5. Global Site Settings
+Use cards or visual blocks only if they match the Canva reference.
 
-The following currently contain hard-coded contact information:
+3. PROGRAMS / SERVICES
 
-* Header
-* Footer
-* CtaBand
-* `Sections.tsx`
-* duplicate CtaBand in `index.tsx`
-* InquiryForm
-* any other components containing phone/WhatsApp/email
+Create a visually attractive services/programs section.
 
-They must use the existing:
+Each service should clearly communicate:
 
-```ts
-useSiteContact()
-```
+Program name
 
-and existing:
+Short description
 
-```text
-settings/site
-```
+Who it is for
 
-Firebase document.
+Benefits
 
-If the admin changes:
+Relevant visual
 
-* Phone
-* WhatsApp
-* Email
-* Address
-* other supported contact information
+CTA where appropriate
 
-the change must reflect EVERYWHERE on the website.
+Use the Canva structure instead of inventing unrelated services.
 
-Search the entire project for hard-coded phone numbers, WhatsApp numbers and email addresses.
+4. WHY CHOOSE US / APPROACH
 
-Do not create another settings system.
-
----
-
-# 6. Contact map
-
-Below the existing Contact page content, add a full-width responsive map.
+If this content exists in Canva, reproduce it as a dedicated section.
 
 Use:
 
-```text
-settings.mapEmbedUrl
-```
+Icons
 
-Do NOT hard-code the map.
+Cards
 
-Keep:
+Numbers
 
-* Existing Contact content
-* WhatsApp
-* Location
-* QR functionality
+Illustrations
 
-Make the map responsive and prevent horizontal overflow.
+Short explanations
 
-If no map URL exists, show a graceful empty state instead of a broken iframe.
+Keep the layout visually clean.
 
----
+5. PARENT / FAMILY INFORMATION
 
-# 7. Admin Panel design
+If the Canva content includes parent guidance, support information, FAQs, or similar sections, reproduce them.
 
-The Admin Panel works functionally but its design does not match the website.
+Make information easy to scan.
 
-Improve its visual design using the existing Turtle Wings:
+Use accordion/FAQ components where appropriate.
 
-* Colors
-* Typography
-* Buttons
-* Cards
-* Border radius
-* Spacing
-* Design language
+6. TESTIMONIALS
 
-Improve:
+If testimonials are present in the Canva reference:
 
-* Navigation
-* Dashboard
-* Forms
-* Tables
-* Add/edit pages
-* Media upload UI
-* Settings
-* Loading states
-* Empty states
-* Error states
+Create a premium testimonial section.
 
-Do NOT make it look like a generic SaaS dashboard.
+Include:
 
-Do NOT remove existing working functionality.
+Parent/client name where provided
 
----
+Testimonial
 
-# 8. Responsive design
+Optional role/context
 
-Perform a complete responsive pass.
+Soft animated transitions
 
-Test:
+Do not invent testimonials.
 
-```text
+If the Canva design does not contain testimonials, do not create fake testimonials.
+
+7. FAQ
+
+If FAQ content exists in the Canva reference, implement it as an accessible accordion.
+
+Requirements:
+
+Keyboard accessible
+
+Mobile friendly
+
+Smooth open/close animation
+
+Proper semantic HTML
+
+Clear active state
+
+Do not invent questions if the Canva content does not provide them.
+
+INQUIRY / CONTACT FORM
+
+The client specifically requested an inquiry form.
+
+Create a professional inquiry form.
+
+Suggested fields:
+
+Parent/Guardian Name
+
+Email
+
+Phone Number
+
+Child's Age
+
+Area / Location
+
+Program Interested In
+
+Message
+
+Preferred Contact Method
+
+Use only fields that make sense with the client's actual service.
+
+Form requirements:
+
+Required field validation
+
+Email validation
+
+Phone validation
+
+Clear error messages
+
+Loading state
+
+Success state
+
+Error state
+
+Accessible labels
+
+Mobile-friendly layout
+
+Spam protection capability
+
+Proper form submission architecture
+
+IMPORTANT:
+
+Do not expose private API keys or secrets in frontend code.
+
+If backend/email configuration is required, create a clean configuration structure and clearly identify where the client should add credentials.
+
+BLOG SYSTEM
+
+The client specifically requested a blogging option.
+
+The architecture must support:
+
+Blog Listing
+
+Include:
+
+Blog title
+
+Featured image
+
+Short excerpt
+
+Publication date
+
+Category
+
+Read More button
+
+Responsive cards
+
+Blog Detail
+
+Each article should have:
+
+Title
+
+Featured image
+
+Publication date
+
+Category
+
+Author if applicable
+
+Rich content
+
+Related posts
+
+CTA to contact/enquire
+
+Blog Categories
+
+Create a structure that can support categories.
+
+Possible examples only if relevant to the Canva/client content:
+
+Autism Support
+
+Parenting
+
+Early Learning
+
+Child Development
+
+Education
+
+Activities
+
+News & Updates
+
+Do not force categories that are not appropriate.
+
+WORDPRESS COMPATIBILITY
+
+The client wants a WordPress/Hostinger website.
+
+Therefore, build the frontend architecture with WordPress integration in mind.
+
+The design should be easy to convert into:
+
+WordPress theme
+
+Custom WordPress pages
+
+WordPress CMS-managed blog
+
+WordPress inquiry form
+
+Avoid building a solution that becomes difficult to migrate into WordPress.
+
+If using React for development/prototyping, keep the structure modular and document the WordPress integration/migration requirements.
+
+HOSTINGER COMPATIBILITY
+
+The final solution must be deployable on a normal Hostinger hosting environment.
+
+Avoid unnecessary infrastructure.
+
+Do not require expensive cloud services unless absolutely necessary.
+
+Keep hosting requirements simple.
+
+RESPONSIVE DESIGN
+
+The website must be fully responsive.
+
+Test and optimize for:
+
+Desktop
+
 1920px
 1440px
+1366px
+
+Tablet
+
 1024px
 768px
+
+Mobile
+
+430px
 390px
 375px
-```
+360px
 
 Pay special attention to:
 
-* Videos
-* Video cards
-* Members
-* Blog cards
-* Program cards
-* Header
-* Mobile navigation
-* Hero
-* Contact
-* Map
-* Footer
-* Images
-* Firebase-hosted videos
+Navigation
 
-Fix:
+Hero section
 
-* Horizontal overflow
-* Fixed widths
-* Broken grids
-* Incorrect video aspect ratios
-* Cropped videos/images
-* Mobile navigation overflow
-* Excessive spacing
-* Text wrapping
+Typography
 
-Do not redesign the website.
+Buttons
 
----
+Cards
 
-# 9. Media upload
+Images
 
-Verify every media-enabled Admin Panel section:
+Forms
 
-* Programs
-* Members
-* Blog
-* Videos
-* Site Settings
-* Homepage/content sections
+Blog cards
 
-Admin should be able to:
+Footer
 
-```text
-Choose local file
-↓
-Upload to Firebase Storage
-↓
-Show progress
-↓
-Show preview
-↓
-Save Firebase Storage URL
-↓
-Website displays it
-```
+Horizontal overflow
 
-No manual HTTPS URL should be required for new uploads.
+There must be:
 
-Existing HTTPS URLs must continue working.
+NO horizontal scrolling on mobile.
 
----
+ACCESSIBILITY
 
-# 10. Final build/test
+Because the website is related to children with special needs, accessibility is especially important.
 
-Run:
+Follow good accessibility practices:
 
-```text
-npm run build
-```
+Semantic HTML
 
-Fix ALL TypeScript/import/build errors.
+Proper heading hierarchy
 
-Then verify:
+Accessible navigation
 
-### Admin
+Keyboard navigation
 
-* Login
-* Dashboard
-* Members CRUD
-* Blog CRUD
-* Blog publishing
-* Video CRUD
-* Image upload
-* Video upload
-* Site Settings
+Visible focus states
 
-### Website
+Alt text for meaningful images
 
-* Members navigation
-* Members page
-* Public members
-* Blog listing
-* Blog detail
-* Blog after normal navigation
-* Blog after hard reload
-* Blog after direct URL
-* Newly published blog
-* Videos
-* Uploaded images
-* Uploaded videos
-* Global phone
-* Global WhatsApp
-* Global email
-* Contact map
-* Desktop responsive
-* Mobile responsive
-* No horizontal overflow
-* No console errors
+Decorative images marked appropriately
 
-### Firebase
+Sufficient color contrast
 
-Keep:
+Accessible forms
 
-```text
-Firestore
-├── admins
-├── programs
-├── members
-├── blogs
-├── videos
-├── enquiries
-└── settings
-    └── site
+Proper labels
 
-Storage
-├── images/
-└── videos/
-```
+ARIA only where necessary
 
-Do not create duplicate collections.
+Reduced-motion support
 
-Do not create duplicate Firebase initialization.
+Avoid flashing animations
 
-## Important
+The website should feel inclusive and comfortable to use.
 
-Continue from the current repository state.
+TYPOGRAPHY
+
+Analyze the Canva reference and reproduce the typography style as closely as possible.
+
+Use appropriate web-safe/Google fonts where possible.
+
+Create a consistent typography system:
+
+H1
+
+H2
+
+H3
+
+Body
+
+Small text
+
+Button text
+
+Navigation
+
+Blog text
+
+Do not use too many different fonts.
+
+Maintain excellent readability, especially for parents reading detailed information.
+
+IMAGES & ILLUSTRATIONS
+
+Use the Canva design as the visual reference.
+
+If the exact Canva image assets cannot be imported:
+
+Create appropriate placeholders
+
+Maintain the same aspect ratio
+
+Maintain the same visual hierarchy
+
+Use visually similar royalty-free assets only where appropriate
+
+Clearly structure image locations so they can later be replaced
+
+Do NOT use random stock images that completely change the visual identity.
+
+For child-related imagery, maintain a warm, inclusive, respectful, professional visual style.
+
+HEADER
+
+Create a professional responsive header based on Canva.
+
+Desktop:
+
+Logo
+
+Navigation
+
+CTA
+
+Mobile:
+
+Logo
+
+Hamburger menu
+
+Smooth mobile navigation
+
+CTA if space allows
+
+Header should have a polished scroll behavior.
+
+For example:
+
+Transparent/hero header initially if Canva supports it
+
+Transition to solid/light background after scrolling
+
+Only implement this if consistent with the reference design.
+
+FOOTER
+
+Create a complete footer based on the Canva reference.
+
+Potential sections:
+
+Logo
+
+Short description
+
+Quick Links
+
+Programs
+
+Contact details
+
+Email
+
+Phone
+
+Social links
+
+Copyright
+
+Privacy Policy
+
+Terms if required
+
+Do not invent actual contact details.
+
+Use placeholders where client information is missing.
+
+SEO
+
+Build the site with SEO best practices.
+
+Include:
+
+Proper title tags
+
+Meta descriptions
+
+Canonical URLs
+
+Semantic HTML
+
+Proper H1/H2/H3 structure
+
+Open Graph metadata
+
+Twitter/social metadata
+
+Descriptive image alt text
+
+Clean URLs
+
+XML sitemap compatibility
+
+Robots.txt compatibility
+
+Schema markup where appropriate
+
+Possible schema types:
+
+Organization
+
+LocalBusiness, only if accurate
+
+EducationalOrganization, where appropriate
+
+Article for blog posts
+
+FAQPage only where valid
+
+Do not add fake business information.
+
+PERFORMANCE
+
+Optimize for fast loading.
+
+Use:
+
+Lazy loading
+
+Responsive images
+
+Modern image formats where possible
+
+Minimal JavaScript
+
+Code splitting where useful
+
+Efficient CSS
+
+Avoid unnecessary libraries
+
+Avoid excessive animation libraries
+
+The website should feel fast on mobile networks.
+
+UI DETAILS
+
+Pay attention to:
+
+Border radius
+
+Shadows
+
+Spacing
+
+Section heights
+
+Button sizes
+
+Hover states
+
+Image cropping
+
+Card alignment
+
+Background shapes
+
+Decorative illustrations
+
+Section transitions
+
+Everything should feel intentionally designed.
+
+Do not make every section look like a separate template.
+
+Maintain one consistent design system throughout the entire website.
+
+CONTENT RULE
+
+VERY IMPORTANT:
+
+Use the actual content from the Canva reference wherever available.
+
+Do not:
+
+Invent services
+
+Invent testimonials
+
+Invent statistics
+
+Invent awards
+
+Invent certifications
+
+Invent staff members
+
+Invent claims
+
+Invent medical outcomes
+
+Invent success percentages
+
+If content is missing, use a clearly marked placeholder instead of fabricated information.
+
+SPECIAL NEEDS / AUTISM CONTENT
+
+Use respectful and person-centered language.
+
+Avoid language that could sound insensitive, stigmatizing, or medically misleading.
+
+The website should communicate support, inclusion, learning, development, and family partnership.
+
+Do not make medical promises.
+
+Do not claim that a program "cures" autism or guarantees developmental outcomes.
+
+MICRO INTERACTIONS
+
+Add polished interactions such as:
+
+Button hover
+
+Icon movement
+
+Card hover
+
+Image zoom
+
+Navigation transition
+
+Scroll reveal
+
+FAQ transition
+
+Form states
+
+Blog card interactions
+
+Keep them subtle.
+
+The website should look like it was designed by a senior agency, not generated from a template.
+
+DESIGN QUALITY BAR
+
+Imagine this website is being reviewed by:
+
+A senior UI/UX designer
+
+A WordPress developer
+
+A branding designer
+
+A frontend engineer
+
+A parent looking for support for their child
+
+The result must feel:
+
+Premium
+Warm
+Trustworthy
+Accessible
+Modern
+Professional
+Child-friendly
+Responsive
+Fast
+
+DO NOT DO THESE THINGS
 
 Do NOT:
 
-* Rebuild from scratch
-* Replace Firebase
-* Replace authentication
-* Create duplicate collections
-* Remove WhatsApp
-* Remove QR/location features
-* Remove working CRUD
-* Use mock data
-* Hard-code members/blogs/videos
-* Make Firestore globally writable
-* Make Storage globally writable
+Use a generic SaaS template
 
-Fix the build first.
+Use a generic school template
 
-Then complete each remaining task one by one.
+Ignore the Canva design
 
-After completing everything, report:
+Change the color palette unnecessarily
 
-1. Files changed
-2. Features completed
-3. Firestore rule changes
-4. Storage rule changes
-5. Manual Firebase Console actions required
-6. Build result
-7. Any remaining issues
+Invent content
 
-Do not stop halfway. Continue until all items above are completed and the build is working.
+Add excessive animations
+
+Add unnecessary gradients
+
+Use excessive glassmorphism
+
+Make the site look like an AI-generated template
+
+Add random sections
+
+Add fake testimonials
+
+Add fake statistics
+
+Add fake certifications
+
+Add fake reviews
+
+Create unnecessary pages
+
+Use huge amounts of JavaScript for simple UI
+
+Break mobile responsiveness
+
+Create horizontal scrolling
+
+Hide important content behind animations
+
+DEVELOPMENT APPROACH
+
+Before implementing:
+
+Analyze the Canva reference.
+
+Identify the complete page structure.
+
+Identify reusable components.
+
+Identify typography.
+
+Identify colors.
+
+Identify spacing system.
+
+Identify animation opportunities.
+
+Identify responsive behavior.
+
+Identify content that must remain exactly aligned with the Canva reference.
+
+Then build.
+
+Use reusable components instead of duplicating code.
+
+Recommended structure:
+
+Header
+
+Navigation
+
+Hero
+
+Section components
+
+Program cards
+
+About sections
+
+Testimonial components
+
+FAQ
+
+Contact/Inquiry form
+
+Blog listing
+
+Blog card
+
+Blog detail
+
+Footer
+
+IMPORTANT: CREDIT / TOKEN EFFICIENCY
+
+Do not repeatedly regenerate the entire website.
+
+Work incrementally.
+
+First establish:
+
+Design system → Header → Hero → Main sections → Forms → Blog → Footer → Responsive polish
+
+When making future changes, modify only the affected components.
+
+Do not rewrite unrelated sections.
+
+Avoid unnecessary dependencies.
+
+Keep the code clean and production-ready.
+
+FINAL ACCEPTANCE CHECKLIST
+
+Before considering the website complete, verify:
+
+Canva visual direction followed
+
+Canva content used wherever available
+
+Desktop design polished
+
+Tablet design polished
+
+Mobile design polished
+
+No horizontal scrolling
+
+Smooth animations
+
+Reduced-motion support
+
+Inquiry form implemented
+
+Form validation implemented
+
+Blog listing implemented
+
+Blog detail structure implemented
+
+SEO metadata included
+
+Accessible navigation
+
+Accessible forms
+
+Proper heading hierarchy
+
+Image optimization
+
+Fast loading
+
+WordPress migration/integration considered
+
+Hostinger deployment considered
+
+No fabricated client information
+
+No fake testimonials/statistics
+
+No unnecessary dependencies
+
+Clean reusable components
+
+Production-quality UI
+
+MOST IMPORTANT INSTRUCTION
+
+The Canva reference is the design authority.
+
+Do not interpret this as a request to create a website "inspired by" Canva.
+
+Interpret it as:
+
+"Recreate the client's Canva design and content as a polished, responsive, animated production website, while improving usability, responsiveness, accessibility, performance, and WordPress compatibility."
 
 This project was built with [Lovable](https://lovable.dev).
 
 ## Build with Lovable
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/a2c292cd-4a67-42ce-8ab4-6c7f42c9c8b9).
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/28a319b6-e231-43cc-b0e2-bbef65e7fe24).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
 - **Stay in sync**: every change made in Lovable is committed straight to this repository.
