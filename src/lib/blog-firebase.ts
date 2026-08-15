@@ -26,18 +26,22 @@ export function blogDocToPost(doc: BlogDoc): Post {
   };
 }
 
-/** Published Firebase posts, mapped to `Post`. Returns [] on any failure. */
+/**
+ * Published Firebase posts, mapped to `Post`.
+ * Throws on failure so React Query can surface a real error state instead of
+ * silently falling back to static content.
+ */
 export async function fetchPublishedFirebasePosts(): Promise<Post[]> {
-  try {
-    const docs = await fetchPublishedBlogs();
-    return docs.filter((d) => d.isPublished && d.slug).map(blogDocToPost);
-  } catch {
-    return [];
-  }
+  const docs = await fetchPublishedBlogs();
+  return docs.filter((d) => d.isPublished && d.slug).map(blogDocToPost);
 }
 
-/** Static posts first, then Firebase posts, de-duplicated by slug. */
-export function mergePostsBySlug(staticPosts: Post[], firebasePosts: Post[]): Post[] {
-  const seen = new Set(staticPosts.map((p) => p.slug));
-  return [...staticPosts, ...firebasePosts.filter((p) => !seen.has(p.slug))];
+/**
+ * Firebase is the source of truth. Static posts are demo content only and are
+ * used when Firestore has no published posts at all — they never override,
+ * re-order or shadow a Firebase post.
+ */
+export function resolvePosts(firebasePosts: Post[], demoPosts: Post[]): Post[] {
+  return firebasePosts.length > 0 ? firebasePosts : demoPosts;
 }
+
