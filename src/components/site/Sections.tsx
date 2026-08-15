@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
 import { site } from "@/lib/site-content";
+import { useSiteContact } from "@/lib/site-contact";
 
 export function PageHero({
   eyebrow,
@@ -32,6 +33,8 @@ export function PageHero({
 }
 
 export function CtaBand() {
+  const contact = useSiteContact();
+
   return (
     <section className="section-pad" aria-labelledby="cta">
       <div className="container-site">
@@ -54,10 +57,10 @@ export function CtaBand() {
               Book a Parent Consultation
             </Link>
             <a
-              href={site.phoneHref}
+              href={contact.phoneHref}
               className="inline-flex min-h-12 items-center rounded-full border-2 border-forest-deep/40 px-6 font-bold text-forest-deep transition-colors hover:border-forest-deep"
             >
-              Call {site.phone}
+              Call {contact.phone}
             </a>
           </div>
         </Reveal>

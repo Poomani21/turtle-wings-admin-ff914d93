@@ -2,8 +2,11 @@ import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, MessageCircle, Phone, Clock } from "lucide-react";
 import mascot from "@/assets/turtle-mascot.png";
 import { navLinks, site } from "@/lib/site-content";
+import { useSiteContact } from "@/lib/site-contact";
 
 export function Footer() {
+  const contact = useSiteContact();
+
   return (
     <footer className="mt-4 bg-forest-deep text-cream">
       <div className="container-site grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
@@ -46,9 +49,9 @@ export function Footer() {
             <li className="flex gap-2">
               <Clock aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-secondary" />
               <span>
-                {site.timings}
+                {contact.timings}
                 <br />
-                {site.closed}
+                {contact.closed}
               </span>
             </li>
           </ul>
@@ -59,29 +62,29 @@ export function Footer() {
           <ul className="mt-4 space-y-3 text-sm text-cream/85">
             <li className="flex gap-2">
               <MapPin aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-secondary" />
-              <span>{site.address.join(" ")}</span>
+              <span>{contact.address.join(" ")}</span>
             </li>
             <li className="flex gap-2">
               <Phone aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-secondary" />
-              <a className="hover:text-secondary" href={site.phoneHref}>
-                {site.phone}
+              <a className="hover:text-secondary" href={contact.phoneHref}>
+                {contact.phone}
               </a>
             </li>
             <li className="flex gap-2">
               <MessageCircle aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-secondary" />
               <a
                 className="hover:text-secondary"
-                href={site.whatsappHref}
+                href={contact.whatsappHref}
                 target="_blank"
                 rel="noreferrer"
               >
-                WhatsApp {site.whatsapp}
+                WhatsApp {contact.whatsapp}
               </a>
             </li>
             <li className="flex min-w-0 gap-2">
               <Mail aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-secondary" />
-              <a className="break-all hover:text-secondary" href={`mailto:${site.email}`}>
-                {site.email}
+              <a className="break-all hover:text-secondary" href={`mailto:${contact.email}`}>
+                {contact.email}
               </a>
             </li>
           </ul>
@@ -93,7 +96,7 @@ export function Footer() {
           <p>
             © {new Date().getFullYear()} {site.name}. All rights reserved.
           </p>
-          <p>{site.website}</p>
+          <p>{contact.website}</p>
         </div>
       </div>
     </footer>
