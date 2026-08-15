@@ -54,52 +54,73 @@ function BlogIndex() {
 
       <section className="section-pad">
         <div className="container-site">
-          <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {allPosts.map((post, i) => (
-              <Reveal as="li" key={post.slug} delay={i * 80} className="card-soft overflow-hidden">
-                <Link
-                  to="/blog/$slug"
-                  params={{ slug: post.slug }}
-                  className="group block h-full focus-visible:outline-none"
-                >
-                  <span className="block overflow-hidden">
-                    <img
-                      src={post.image}
-                      alt={post.imageAlt}
-                      width={1200}
-                      height={800}
-                      loading="lazy"
-                      className="aspect-[3/2] w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  </span>
-                  <span className="block p-6">
-                    <span className="inline-flex rounded-full bg-accent px-3 py-1 text-xs font-extrabold text-accent-foreground">
-                      {post.category}
+          {isPending ? (
+            <p className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Loader2 aria-hidden="true" className="size-4 animate-spin" /> Loading articles…
+            </p>
+          ) : isError ? (
+            <p role="alert" className="text-sm text-destructive">
+              We couldn't load the articles right now. {(error as Error)?.message}
+            </p>
+          ) : allPosts.length === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              No articles have been published yet. Please check back soon.
+            </p>
+          ) : (
+            <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {allPosts.map((post, i) => (
+                <Reveal as="li" key={post.slug} delay={i * 80} className="card-soft overflow-hidden">
+                  <Link
+                    to="/blog/$slug"
+                    params={{ slug: post.slug }}
+                    className="group block h-full focus-visible:outline-none"
+                  >
+                    {post.image ? (
+                      <span className="block overflow-hidden">
+                        <img
+                          src={post.image}
+                          alt={post.imageAlt}
+                          width={1200}
+                          height={800}
+                          loading="lazy"
+                          className="aspect-[3/2] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                      </span>
+                    ) : null}
+                    <span className="block p-6">
+                      {post.category ? (
+                        <span className="inline-flex rounded-full bg-accent px-3 py-1 text-xs font-extrabold text-accent-foreground">
+                          {post.category}
+                        </span>
+                      ) : null}
+                      {post.date ? (
+                        <span className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
+                          <CalendarDays aria-hidden="true" className="size-3.5" />
+                          <time dateTime={post.date}>{formatDate(post.date)}</time>
+                        </span>
+                      ) : null}
+                      <span className="mt-2 block font-display text-xl font-bold text-forest-deep">
+                        {post.title}
+                      </span>
+                      <span className="mt-2 block text-sm leading-relaxed text-muted-foreground">
+                        {post.excerpt}
+                      </span>
+                      <span className="mt-4 inline-flex items-center gap-2 text-sm font-extrabold text-forest-deep">
+                        Read more
+                        <ArrowRight
+                          aria-hidden="true"
+                          className="size-4 transition-transform group-hover:translate-x-1"
+                        />
+                      </span>
                     </span>
-                    <span className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
-                      <CalendarDays aria-hidden="true" className="size-3.5" />
-                      <time dateTime={post.date}>{formatDate(post.date)}</time>
-                    </span>
-                    <span className="mt-2 block font-display text-xl font-bold text-forest-deep">
-                      {post.title}
-                    </span>
-                    <span className="mt-2 block text-sm leading-relaxed text-muted-foreground">
-                      {post.excerpt}
-                    </span>
-                    <span className="mt-4 inline-flex items-center gap-2 text-sm font-extrabold text-forest-deep">
-                      Read more
-                      <ArrowRight
-                        aria-hidden="true"
-                        className="size-4 transition-transform group-hover:translate-x-1"
-                      />
-                    </span>
-                  </span>
-                </Link>
-              </Reveal>
-            ))}
-          </ul>
+                  </Link>
+                </Reveal>
+              ))}
+            </ul>
+          )}
         </div>
       </section>
+
 
       <CtaBand />
     </>
