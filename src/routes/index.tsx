@@ -17,7 +17,6 @@ import mascot from "@/assets/turtle-mascot.png";
 import aboutImg from "@/assets/about-story-time.jpg";
 import programImg from "@/assets/program-sensory.jpg";
 import { Reveal } from "@/components/site/Reveal";
-import { useSiteContact } from "@/lib/site-contact";
 import { CtaBand } from "@/components/site/Sections";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import {
@@ -58,8 +57,6 @@ const icons: Record<string, ComponentType<{ className?: string; "aria-hidden"?: 
 };
 
 function Home() {
-  const contact = useSiteContact();
-
   return (
     <>
       {/* HERO */}
