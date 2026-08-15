@@ -7,7 +7,7 @@ import { SectionHeading } from "@/components/site/SectionHeading";
 import { learningDomains, programFacts, programObjectives } from "@/lib/site-content";
 import { fetchActivePrograms, fetchSiteSettings } from "@/lib/cms";
 import { PageHero } from "./about";
-import { CtaBand } from "./index";
+import { CtaBand } from "@/components/site/Sections";
 
 const title = "Evening Learning Circle — Our Signature Program | Turtle Wings";
 const description =

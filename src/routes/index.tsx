@@ -18,6 +18,7 @@ import aboutImg from "@/assets/about-story-time.jpg";
 import programImg from "@/assets/program-sensory.jpg";
 import { Reveal } from "@/components/site/Reveal";
 import { useSiteContact } from "@/lib/site-contact";
+import { CtaBand } from "@/components/site/Sections";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import {
   learningDomains,
@@ -273,40 +274,5 @@ function Home() {
 
       <CtaBand />
     </>
-  );
-}
-
-export function CtaBand() {
-  return (
-    <section className="section-pad" aria-labelledby="cta">
-      <div className="container-site">
-        <Reveal
-          variant="scale"
-          className="relative overflow-hidden rounded-3xl bg-secondary px-6 py-12 text-center shadow-card sm:px-12"
-        >
-          <h2 id="cta" className="text-3xl sm:text-4xl">
-            Ready to get started?
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-secondary-foreground/85 sm:text-lg">
-            Contact us today to schedule your complimentary Parent Consultation and take the first
-            step towards your child's learning journey.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link
-              to="/contact"
-              className="inline-flex min-h-12 items-center rounded-full bg-forest-deep px-6 font-extrabold text-cream transition-transform hover:-translate-y-0.5"
-            >
-              Book a Parent Consultation
-            </Link>
-            <a
-              href={contact.phoneHref}
-              className="inline-flex min-h-12 items-center rounded-full border-2 border-forest-deep/40 px-6 font-bold text-forest-deep transition-colors hover:border-forest-deep"
-            >
-              Call {contact.phone}
-            </a>
-          </div>
-        </Reveal>
-      </div>
-    </section>
   );
 }

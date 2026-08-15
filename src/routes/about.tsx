@@ -3,7 +3,7 @@ import { Mail } from "lucide-react";
 import aboutImg from "@/assets/about-story-time.jpg";
 import { Reveal } from "@/components/site/Reveal";
 import { founder, whoWeAre, site } from "@/lib/site-content";
-import { CtaBand } from "./index";
+import { CtaBand } from "@/components/site/Sections";
 
 const title = "About Turtle Wings — Meet the Founder | Special Education, Bengaluru";
 const description =
