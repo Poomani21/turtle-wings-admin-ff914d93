@@ -1,7 +1,9 @@
 import { useState, type ReactNode } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Loader2, Pencil, Plus, Trash2, X } from "lucide-react";
-import { adminDelete, adminList, adminSave, uploadFile, type CollectionName } from "@/lib/cms";
+import { adminDelete, adminList, adminSave, type CollectionName } from "@/lib/cms";
+import { MediaUpload } from "@/components/admin/MediaUpload";
+
 
 export type FieldDef = {
   name: string;
