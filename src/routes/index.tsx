@@ -17,6 +17,7 @@ import mascot from "@/assets/turtle-mascot.png";
 import aboutImg from "@/assets/about-story-time.jpg";
 import programImg from "@/assets/program-sensory.jpg";
 import { Reveal } from "@/components/site/Reveal";
+import { useSiteContact } from "@/lib/site-contact";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import {
   learningDomains,
