@@ -51,9 +51,10 @@ service cloud.firestore {
       allow read, write: if isAdmin();
     }
 
-    // Members — private. Admin read and write only.
+    // Members — the public /members page shows only members explicitly marked
+    // isPublic == true by an admin. Everything else stays admin-only.
     match /members/{memberId} {
-      allow read: if isAdmin();
+      allow read: if resource.data.isPublic == true || isAdmin();
       allow create, update, delete: if isAdmin();
     }
 

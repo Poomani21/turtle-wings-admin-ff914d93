@@ -32,9 +32,12 @@ service firebase.storage {
       allow write: if isAdmin();
     }
 
-    // Member photos are private data: admin read and write only.
+    // Member photos: readable because the public /members page renders the
+    // photos of members an admin marked isPublic == true. Admins should only
+    // upload a photo for a child whose family has given permission.
     match /members/{fileName=**} {
-      allow read, write: if isAdmin();
+      allow read: if true;
+      allow write: if isAdmin();
     }
 
     // Everything else is denied.
