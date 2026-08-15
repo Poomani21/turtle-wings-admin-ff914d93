@@ -152,15 +152,21 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  // The content manager has its own chrome, so the public header/footer are
+  // hidden on /admin to keep the admin panel focused.
+  const isAdmin = useRouterState({
+    select: (s) => s.location.pathname.startsWith("/admin"),
+  });
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Header />
+      {isAdmin ? null : <Header />}
       <main id="main">
         {/* Required: nested routes render here. */}
         <Outlet />
       </main>
-      <Footer />
+      {isAdmin ? null : <Footer />}
     </QueryClientProvider>
   );
 }
+
