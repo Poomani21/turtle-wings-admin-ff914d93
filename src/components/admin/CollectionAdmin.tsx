@@ -67,15 +67,6 @@ export function CollectionAdmin({
     setDraft((current) => (current ? { ...current, [field]: value } : current));
   }
 
-  async function onUpload(field: FieldDef, file: File) {
-    setUploading(field.name);
-    try {
-      const url = await uploadFile(field.folder ?? name, file);
-      set(field.name, url);
-    } finally {
-      setUploading(null);
-    }
-  }
 
   return (
     <div>
