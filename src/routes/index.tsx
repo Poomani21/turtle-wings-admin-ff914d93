@@ -296,10 +296,10 @@ export function CtaBand() {
               Book a Parent Consultation
             </Link>
             <a
-              href={site.phoneHref}
+              href={contact.phoneHref}
               className="inline-flex min-h-12 items-center rounded-full border-2 border-forest-deep/40 px-6 font-bold text-forest-deep transition-colors hover:border-forest-deep"
             >
-              Call {site.phone}
+              Call {contact.phone}
             </a>
           </div>
         </Reveal>

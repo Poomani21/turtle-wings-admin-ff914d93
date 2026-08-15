@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
-import { site } from "@/lib/site-content";
+import { useSiteContact } from "@/lib/site-contact";
 import { submitEnquiry } from "@/lib/cms";
 
 /**
@@ -16,6 +16,7 @@ type Errors = Partial<Record<string, string>>;
 const programOptions = ["Evening Group Program (3–10 years)", "Parent Consultation", "Not sure yet"];
 
 export function InquiryForm() {
+  const contact = useSiteContact();
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
@@ -87,7 +88,7 @@ export function InquiryForm() {
         <h3 className="mt-4 text-2xl">Thank you for reaching out</h3>
         <p className="mt-3 text-muted-foreground">
           We have received your enquiry and will contact you to schedule your complimentary Parent
-          Consultation. You can also reach us on {site.phone}.
+          Consultation. You can also reach us on {contact.phone}.
         </p>
         <button
           type="button"
@@ -202,7 +203,7 @@ export function InquiryForm() {
       {status === "error" ? (
         <p role="alert" className="mt-5 flex gap-2 rounded-xl bg-destructive/10 p-3 text-sm text-destructive">
           <AlertCircle aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
-          Something went wrong sending your enquiry. Please try again, or call us on {site.phone}.
+          Something went wrong sending your enquiry. Please try again, or call us on {contact.phone}.
         </p>
       ) : null}
 
