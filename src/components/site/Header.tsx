@@ -58,7 +58,7 @@ export function Header() {
           </span>
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
+        <nav aria-label="Main" className="hidden items-center gap-1 xl:flex">
           {navLinks.map((link) => (
             <Link
               key={link.to}
@@ -85,7 +85,7 @@ export function Header() {
           aria-expanded={open}
           aria-controls="mobile-nav"
           aria-label={open ? "Close menu" : "Open menu"}
-          className="grid size-11 place-items-center rounded-full border border-border bg-card text-forest-deep lg:hidden"
+          className="grid size-11 place-items-center rounded-full border border-border bg-card text-forest-deep xl:hidden"
         >
           {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
         </button>
@@ -94,7 +94,7 @@ export function Header() {
       <div
         id="mobile-nav"
         hidden={!open}
-        className="border-t border-border bg-background lg:hidden"
+        className="border-t border-border bg-background xl:hidden"
       >
         <nav aria-label="Mobile" className="container-site flex flex-col gap-1 py-4">
           {navLinks.map((link) => (
